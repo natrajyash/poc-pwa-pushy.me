@@ -1,6 +1,6 @@
 {
-  "name": "poc-pwa",
-  "short_name": "poc-pwa",
+  "name": "POC- Progressive Web App",
+  "short_name": "POC-PWA",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

@@ -8,12 +8,14 @@ import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './components/header/header.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { EnableNotificationsComponent } from './components/enable-notifications/enable-notifications.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    EnableNotificationsComponent
   ],
   imports: [
     BrowserModule,

@@ -4,8 +4,24 @@
             <div class="card m-5 p-3 text-center">
                 <h1 class="display-5">Welcome!</h1>
                 <p class="lead">Explore PWA Concept.</p>
-                <button class="btn btn-primary">Start!</button>
+                <p>Clicking Start will allow you to turn on Notifications for this app.</p>
+                <button class="btn btn-primary" (click)="subscribe()" [disabled]="isSubscribed">Start!</button>
+                <div style="margin-top: 10px">
+                    <ngb-alert *ngIf="isSubscribed" type="success" [dismissible]="false">
+                        You have successfully subscribed to our notifications!
+                    </ngb-alert>
+                </div>
+                <ng-container *ngIf="isSubscribed">
+                    <button class="btn btn-warning" (click)="clearSubscription()">Unsubscribe to Notifications!</button>
+                </ng-container>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #modal let-c="close" let-d="dismiss">
+    <div class="modal-body text-center">
+        <p>{{ errorMessage }}</p>
+        <button type="button" class="btn btn-outline-dark" (click)="c('Save click'); navigate();">Enable Notifications</button>
+    </div>
+</ng-template>
