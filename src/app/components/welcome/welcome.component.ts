@@ -14,7 +14,8 @@ const WEB_PUSH_PUBLIC_KEY = "BJy_ehmZZv-Kh2BZgVjvhtEtYq0ukfoG3M_ujLcR84_eLsvf6Di
 })
 export class WelcomeComponent implements OnInit {
 
-  isSubscribed: boolean = false;
+  isNotificationPermissionGranted = false;
+  isLoadingFinished = false;
   errorMessage: string = "Error! Notifications could not be subscribed to!";
   @ViewChild('modal') modal: any;
 
@@ -22,16 +23,29 @@ export class WelcomeComponent implements OnInit {
     private swPush: SwPush,
     private router: Router,
     config: NgbModalConfig,
-    private modalService: NgbModal,
-    private notificationService: NotificationService
+    private modalService: NgbModal
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
-    this.isSubscribed = this.notificationService.isSubscribed();
-    console.log(this.isSubscribed);
+    if ('permissions' in navigator) {
+      navigator.permissions.query({ name: 'notifications' })
+        .then((permission) => {
+          if (permission.state == 'granted') {
+            this.isNotificationPermissionGranted = true;
+          }
+          this.isLoadingFinished = true;
+          permission.onchange = () => {
+            if (permission.state == 'granted') {
+              this.isNotificationPermissionGranted = true;
+            } else {
+              this.isNotificationPermissionGranted = false;
+            }
+          }
+        });
+    }
   }
 
   async subscribe(): Promise<void> {
@@ -40,23 +54,11 @@ export class WelcomeComponent implements OnInit {
         serverPublicKey: WEB_PUSH_PUBLIC_KEY,
       });
       console.log(sub);
-      this.isSubscribed = true;
-      this.notificationService.saveSubscription(sub);
       // TODO: Send to server.
     } catch (err) {
       console.error('Could not subscribe due to:', err);
       this.errorMessage = 'Could not subscribe due to: "' + err + '"';
       this.open(this.modal);
-    }
-  }
-
-  async clearSubscription(): Promise<void> {
-    try {
-      await this.swPush.unsubscribe();
-      this.notificationService.deleteSubscription();
-      this.isSubscribed = false;
-    } catch (error) {
-      alert('Unsubscribe didn\'t work');
     }
   }
   

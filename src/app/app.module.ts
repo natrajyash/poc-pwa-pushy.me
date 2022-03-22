@@ -9,13 +9,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './components/header/header.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { EnableNotificationsComponent } from './components/enable-notifications/enable-notifications.component';
+import { TestNotificationComponent } from './components/test-notification/test-notification.component';
+import { UsersComponent } from './components/users/users.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastsComponent } from './components/toasts/toasts.component';
+import { PostsComponent } from './components/posts/posts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     WelcomeComponent,
-    EnableNotificationsComponent
+    EnableNotificationsComponent,
+    TestNotificationComponent,
+    UsersComponent,
+    ToastsComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +35,8 @@ import { EnableNotificationsComponent } from './components/enable-notifications/
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

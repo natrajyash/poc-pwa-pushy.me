@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <div class="card m-5 p-3 text-center">
+                <h1 class="display-5">Test Notification!</h1>
+
+                <button class="btn btn-primary" type="button" (click)="sendNotification()" [disabled]="!isNotificationPermissionGranted">
+                    <ng-container *ngIf="!isLoadingFinished">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </ng-container>
+                    <ng-container *ngIf="isLoadingFinished">
+                        Test!
+                    </ng-container>
+                </button>
+                <div style="margin-top: 10px">
+                    <ngb-alert *ngIf="isLoadingFinished && !isNotificationPermissionGranted" type="warning" [dismissible]="false">
+                        Your browser cannot show notifications!
+                    </ngb-alert>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
