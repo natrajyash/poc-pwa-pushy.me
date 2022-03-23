@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <div class="card m-5 p-3 text-center">
+                <h1 class="display-5">Newsletter!</h1>
+                <p>Clicking "Send Newsletter" will send notifications to all subscribers a Notifications in their device.</p>
+                <button class="btn btn-primary" type="button" (click)="sendNewsletter()" [disabled]="isNewsletterSend">
+                    <ng-container *ngIf="!isLoadingFinished">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </ng-container>
+                    <ng-container *ngIf="isLoadingFinished">
+                        Send Newsletter!
+                    </ng-container>
+                </button>
+                <div style="margin-top: 10px">
+                    <ngb-alert *ngIf="isLoadingFinished && isNewsletterSend && !isNewsletterSendFailed" type="success" [dismissible]="false">
+                        Notifications for newsletter has been sent to all subscribers!
+                    </ngb-alert>
+                    <ngb-alert *ngIf="isLoadingFinished && isNewsletterSendFailed" type="danger" [dismissible]="false">
+                        Notifications could not be send!
+                    </ngb-alert>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

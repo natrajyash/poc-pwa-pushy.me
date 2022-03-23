@@ -11,9 +11,11 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { EnableNotificationsComponent } from './components/enable-notifications/enable-notifications.component';
 import { TestNotificationComponent } from './components/test-notification/test-notification.component';
 import { UsersComponent } from './components/users/users.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastsComponent } from './components/toasts/toasts.component';
 import { PostsComponent } from './components/posts/posts.component';
+import { HttpRequestInterceptor } from './interceptors/http-request.interceptor';
+import { NewsletterComponent } from './components/newsletter/newsletter.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { PostsComponent } from './components/posts/posts.component';
     TestNotificationComponent,
     UsersComponent,
     ToastsComponent,
-    PostsComponent
+    PostsComponent,
+    NewsletterComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,9 @@ import { PostsComponent } from './components/posts/posts.component';
     NgbModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -23,7 +23,8 @@ export class WelcomeComponent implements OnInit {
     private swPush: SwPush,
     private router: Router,
     config: NgbModalConfig,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private notificationService: NotificationService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -54,7 +55,7 @@ export class WelcomeComponent implements OnInit {
         serverPublicKey: WEB_PUSH_PUBLIC_KEY,
       });
       console.log(sub);
-      // TODO: Send to server.
+      this.notificationService.addPushSubscriber(sub).subscribe();
     } catch (err) {
       console.error('Could not subscribe due to:', err);
       this.errorMessage = 'Could not subscribe due to: "' + err + '"';

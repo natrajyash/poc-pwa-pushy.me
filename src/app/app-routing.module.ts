@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EnableNotificationsComponent } from './components/enable-notifications/enable-notifications.component';
+import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { TestNotificationComponent } from './components/test-notification/test-notification.component';
 import { UsersComponent } from './components/users/users.component';
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'posts',
     component: PostsComponent
+  },
+  {
+    path: 'newsletter',
+    component: NewsletterComponent
   }
 ];
 

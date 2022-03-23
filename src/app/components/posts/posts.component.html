@@ -1,1 +1,35 @@
-<p>posts works!</p>
+<div class="parallax-container">
+    <div class="parallax"></div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4 col-md-2">
+                    <img src="/assets/images/user.png" class="border rounded-circle img-fluid mt-2" [alt]="currentUser.name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="lead mb-0">{{ currentUser.name }}</p>
+                    <p class="mb-0"><strong>@{{ currentUser.username }}</strong></p>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="col-12">
+            <p class="text-primary"><strong>Posts</strong></p>
+        </div>
+        <div class="col-12" *ngFor="let post of posts$ | async">
+            <div class="row m-2 p-2 border border-primary rounded-3">
+                <div class="col-2 col-md-1">
+                    <img src="/assets/images/user.png" class="border rounded-circle img-fluid mt-2" [alt]="currentUser.name">
+                </div>
+                <div class="col-8 col-md-11">
+                    <p class="fw-bold mb-1"><strong>{{ post.title }}</strong></p>
+                    <p class="mb-0">{{ post.body }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

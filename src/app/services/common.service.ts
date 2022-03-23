@@ -23,7 +23,6 @@ export class CommonService {
   }
 
   handleError(error: any): void {
-    console.log('handleError called');
     let errorMessage = 'Unknown Error';
     if (error instanceof HttpErrorResponse) {
       if (error?.hasOwnProperty('error') && error?.error?.hasOwnProperty('error')) {
