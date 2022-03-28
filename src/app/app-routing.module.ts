@@ -31,6 +31,11 @@ const routes: Routes = [
   {
     path: 'newsletter',
     component: NewsletterComponent
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 
