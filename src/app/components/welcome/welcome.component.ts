@@ -50,15 +50,20 @@ export class WelcomeComponent implements OnInit {
   }
 
   async subscribe(): Promise<void> {
-    try {
-      const sub = await this.swPush.requestSubscription({
-        serverPublicKey: WEB_PUSH_PUBLIC_KEY,
-      });
-      console.log(sub);
-      this.notificationService.addPushSubscriber(sub).subscribe();
-    } catch (err) {
-      console.error('Could not subscribe due to:', err);
-      this.errorMessage = 'Could not subscribe due to: "' + err + '"';
+    if (this.swPush.isEnabled) {
+      try {
+        const sub = await this.swPush.requestSubscription({
+          serverPublicKey: WEB_PUSH_PUBLIC_KEY,
+        });
+        console.log(sub);
+        this.notificationService.addPushSubscriber(sub).subscribe();
+      } catch (err) {
+        console.error('Could not subscribe due to:', err);
+        this.errorMessage = 'Could not subscribe due to: "' + err + '"';
+        this.open(this.modal);
+      }
+    } else {
+      this.errorMessage = 'Push API is not supported by this browser!';
       this.open(this.modal);
     }
   }
