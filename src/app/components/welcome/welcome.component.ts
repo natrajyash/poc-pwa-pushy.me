@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { SwPush } from '@angular/service-worker';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from 'src/app/services/notification.service';
-
-const WEB_PUSH_PUBLIC_KEY = "BJy_ehmZZv-Kh2BZgVjvhtEtYq0ukfoG3M_ujLcR84_eLsvf6DifhDbwqrM3Xl5eRXzeQ8SJPpxoP0OFwf_fbxA";
+import 'babel-polyfill';
+declare var Pushy: any;
 
 @Component({
   selector: 'app-welcome',
@@ -20,7 +19,6 @@ export class WelcomeComponent implements OnInit {
   @ViewChild('modal') modal: any;
 
   constructor(
-    private swPush: SwPush,
     private router: Router,
     config: NgbModalConfig,
     private modalService: NgbModal,
@@ -49,29 +47,24 @@ export class WelcomeComponent implements OnInit {
     }
   }
 
-  async subscribe(): Promise<void> {
-    if (this.swPush.isEnabled) {
-      try {
-        const sub = await this.swPush.requestSubscription({
-          serverPublicKey: WEB_PUSH_PUBLIC_KEY,
-        });
-        console.log(sub);
-        this.notificationService.addPushSubscriber(sub).subscribe();
-      } catch (err) {
-        console.error('Could not subscribe due to:', err);
-        this.errorMessage = 'Could not subscribe due to: "' + err + '"';
-        this.open(this.modal);
-      }
-    } else {
-      this.errorMessage = 'Push API is not supported by this browser!';
-      this.open(this.modal);
-    }
+  subscribe(): void {
+    // Register visitor to receive push notifications
+    Pushy.register({ appId: '6242b0447cbf7cf4508887e0' }).then((deviceToken: string) => {
+      // Print device token to console
+      console.log('Pushy device token: ' + deviceToken);
+
+      // Send the token to your backend server via an HTTP GET request
+      this.notificationService.addPushSubscriber({deviceToken: deviceToken}).subscribe();
+    }).catch((err: any) => {
+      // Handle registration errors
+      console.error('Pushy Error => ', err);
+    });
   }
-  
+
   open(content: any) {
     this.modalService.open(content);
   }
-  
+
   navigate(): void {
     this.router.navigateByUrl('enable-notifications');
   }
