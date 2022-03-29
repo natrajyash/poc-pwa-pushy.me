@@ -29,7 +29,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if ('permissions' in navigator) {
+      if ('permissions' in navigator) {
       navigator.permissions.query({ name: 'notifications' })
         .then((permission) => {
           if (permission.state == 'granted') {
@@ -47,9 +47,9 @@ export class WelcomeComponent implements OnInit {
     }
   }
 
-  subscribe(): void {
+  async subscribe(): Promise<void> {
     // Register visitor to receive push notifications
-    Pushy.register({ appId: '6242b0447cbf7cf4508887e0' }).then((deviceToken: string) => {
+    await Pushy.register({ appId: '6242b0447cbf7cf4508887e0' }).then((deviceToken: string) => {
       // Print device token to console
       console.log('Pushy device token: ' + deviceToken);
 
@@ -58,12 +58,15 @@ export class WelcomeComponent implements OnInit {
     }).catch((err: any) => {
       // Handle registration errors
       console.error('Pushy Error => ', err);
+      console.log('reached below error');
       this.errorMessage = 'Could not subscribe due to: "' + err + '"';
+      console.log('reached errorMessage', this.errorMessage);
       this.open(this.modal);
     });
   }
 
   open(content: any) {
+    console.log('reached open');
     this.modalService.open(content);
   }
 
