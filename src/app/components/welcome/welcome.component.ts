@@ -58,6 +58,8 @@ export class WelcomeComponent implements OnInit {
     }).catch((err: any) => {
       // Handle registration errors
       console.error('Pushy Error => ', err);
+      this.errorMessage = 'Could not subscribe due to: "' + err + '"';
+      this.open(this.modal);
     });
   }
 
